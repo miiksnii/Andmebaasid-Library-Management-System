@@ -77,3 +77,5 @@ Tulevikus võib süsteemi täiendada järgmiste võimalustega:
  Raamatute tabel on normaliseerimata
  tekita raamatute tabel, milles on kood, ja teoste tabel, kus on teosed. 
  raamatute tabel foreign keyb teoste tabelit
+
+ autorite otsimine toimub läbi LIKE sql funktsiooni

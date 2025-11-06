@@ -1,4 +1,13 @@
 
+CREATE TABLE IF NOT EXISTS  works (
+    work_id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    release_date DATE,
+    language VARCHAR(50),
+    publisher VARCHAR(100),
+    pages INT,
+    authors VARCHAR(255) 
+);
 
 CREATE TABLE IF NOT EXISTS  employees (
     employee_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -21,7 +30,7 @@ CREATE TABLE IF NOT EXISTS  works (
     language VARCHAR(50),
     publisher VARCHAR(100),
     pages INT,
-    authors VARCHAR(255) 
+    authors VARCHAR(255)
 );
 
 
