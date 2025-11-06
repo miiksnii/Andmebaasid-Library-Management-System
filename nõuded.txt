@@ -1,73 +1,74 @@
 Library Management System Database Project
+Projekti kirjeldus
 
+Projekt hõlmab andmebaasi loomist raamatute, liikmete ja laenutustehingute haldamiseks.
+Süsteemi eesmärk on pakkuda tõhusat viisi raamatukogu töökorralduse automatiseerimiseks, hõlmates nii füüsiliste kui ka digitaalsete raamatute haldust.
 
-Tarvis on koostada haldussüsteem ühe nö valduse alla ühinevatele koolidele.
-Võite abiks võtta juba olemasoleva kooli andmebaasi, kui omate sellist.
+Raamatukogu:
 
-Toimus nö koosolek koolide äriinimestega ja nemad seletasid umbes järgnevat (nõuded muutuvad meil aja jooksul, kui selgub, et üks või teine asi ei ole päris hea)
+hoiab ja müüb raamatuid nii füüsilisel kui ka digitaalsel kujul;
+liikmetel on vastavalt oma auastmele spetsiifilised allahindlused;
+kasutajad saavad laenutada raamatuid, ning süsteem peab salvestama laenutatud raamatud ja hoiatussüsteemi kaudu teavitama enne tähtaega kasutajaid.
 
-Koolide haldus
-    • Süsteemis saab lisada mitmeid koole.
-    • Igal koolil on unikaalne nimi ja asukoht.
-Rühmade haldus
-    • Igal koolil on üks või mitu rühma (nt 10A, 11B).
-    • Rühmad kuuluvad alati kindla kooli alla.
-Õpilaste haldus
-    • Õpilased kuuluvad alati ühte rühma.
-    • Õpilase kohta salvestatakse eesnimi ja perenimi.
-    • Sama nimega õpilasi võib esineda mitmes rühmas.
-    • Õpilastel on ka esindajad
-Õpetajate haldus
-    • Õpetajad on seotud ühe kindla kooliga.
-    • Õpetaja kohta salvestatakse ees- ja perenimi.
-    • Õpetaja võib õpetada mitmele rühmale ja mitut ainet.
-    • Kindlasti peavad süsteemis olema ka õpetajate palgaandmed ning teave palkade väljamaksete kohta
-    • Õpetajate kohta tuleb sisestada ka kontaktandmed: arvestada tuleb, et ühel õpetajal võib olla mitu kontaktelefoni või aadressi     
-Tundide haldus
-    • Õppetunnid seotakse õpetaja ja rühmaga.
-    • Tunni kohta säilitatakse aine nimi ja kuupäev.
-    • Iga tund kuulub konkreetsele rühmale.
-Hinnete haldus
-    • Iga hinne on seotud konkreetse õpilase ja tunniga.
-    • Hindeks lubatud väärtused on 1 kuni 5 (või muu skaalaga vastavalt vajadusele).
-    • Hinnetele võib lisada vabatekstilise kommentaari (nt „puudus”, „hilines”).
-Klassid
-    • Ruumid
-    • Muu info, näiteks töömehele, kel tarvis remonti teha
+Andmemudel
+Raamatud
+ - barcode
+ - title
+ - release_date
+ - authors
+ - language
+ - kirjastus
+ - leheküljed
+ - formaat (füüsiline / digitaalne)
+ - staatus (kas on laenutatud?)
 
-MITTEFUNKTSIONAALSED NÕUDED
-    • Süsteem peab toetama andmebaasi laiendatavust (nt uued koolid, uued ained).
-    • Andmed peavad olema relatsiooniliselt seotud, vältides andmete dubleerimist (normaliseerimine).
-    • Kõik väljad peavad kasutama sobivat andmetüüpi.
-    • Andmebaasis peab olema võimalik andmeid filtreerida ja liita (JOIN-id).
-    • Vajalik on andmete sisestus- ja päringukiirus mõistlikul tasemel.
+Liikmed
+ - auaste (nt tavaline liige, kuldliige, VIP jne)
+ - isikukood
+ - nimi
+ - perenimi
 
-SEOSENÕUDED
-    • Iga rühm kuulub ühele koolile.
-    • Iga õpilane kuulub ühele rühmale.
-    • Iga õpetaja kuulub ühele koolile.
-    • Iga tund on seotud ühe õpetaja ja ühe rühmaga.
-    • Iga hinne on seotud ühe õpilase ja ühe konkreetse tunniga.
+Töötajad
+ - nimi ja perenimi
+ - department (IT tugi, admin jne)
+ - vanus
+ - palk
+ - boonus
+ - telefoninumber
 
-Süsteemis peab olema võimalus tekitada ligipääs erinevate rollidega kasutajatele:
-KASUTAJA STSENAARIUMID (näited)
-Kasutaja A (koolisekretär):
-    • Lisab uue rühma koolile.
-    • Lisab uue õpilase rühma.
-    • Kontrollib, millised õpetajad õpetavad rühmas 10A.
-Kasutaja B (õpetaja):
-    • Lisab oma tunnile õpilaste hinded.
-    • Soovib vaadata, millised hinded andis ta 10. septembri matemaatika tunnis.
-Kasutaja C (õpilane või lapsevanem):
-    • Soovib näha enda (või lapse) viimase kuu hinnete kokkuvõtet.
+Laenutamine
+ - kasutaja
+ - raamat
+ - laenutamise alguskuupäev
+ - laenutamise lõppkuupäev
 
-LAIENDUSVÕIMALUSED - võimalused, millest ei olnud veel aega kokku leppida
-    • Õppeainete tabel eraldi (normaliseerimiseks)
-    • Kasutajakontod (õpilased, õpetajad, administraatorid)
-    • Puudumiste haldus
-    • Tunniplaan
-    • Inventar
+Mittefunktsionaalsed nõuded
+Tabelite seosed ja väljad peavad olema kavandatud nii, et päringute (query’de) tegemine oleks võimalikult tõhus ja optimeeritud.
+Süsteemi struktuur peab toetama laiendatavust ja andmete tervikluse kontrolli.
 
+Seosenõuded
+Iga laenutuse kirje, mis on seotud konkreetse raamatuga, muudab automaatselt raamatu staatust („laenutatud“ / „vaba“).
+Ühel liikmel võib olla korraga piiratud arv aktiivseid laenutusi (nt 5 raamatut).
+Töötajate ja liikmete andmed peavad olema seotud süsteemi autentimis- ja autoriseerimismehhanismiga (rollipõhine ligipääs).
 
-Kasutajate tegemine - näidis.
-Esmalt teeme rolli ja siis lisame kasutajale rolli.
+Rollid ja kasutajate ligipääsud
+Süsteemis peab olema võimalus tekitada ligipääs erinevate rollidega kasutajatele, et tagada andmete turvalisus ja funktsioonide piirangud vastavalt vastutusele.
+
+Kasutajastsenaariumid (näited)
+Kasutaja A (Raamatukoguhoidja):
+Lisab ja haldab raamatuid
+Registreerib ja haldab laenutatud raamatuid
+Lisab ja haldab liikmeid
+
+Kasutaja B (Süsteem / Administraator):
+Lisab töötajaid
+Lisab ja haldab liikmeid
+Jälgib süsteemi logisid ja statistikat
+
+Laiendusvõimalused
+Tulevikus võib süsteemi täiendada järgmiste võimalustega:
+ - Õppeainete tabel (andmebaasi normaliseerimiseks ja kooliraamatukogude integreerimiseks)
+ - Kasutajakontod erinevate rollidega (õpilased, õpetajad, administraatorid)
+ - Puudumiste haldus (õppeasutuse kontekstis)
+ - Tunniplaani haldus
+ - Inventari jälgimine (näiteks seadmed, õppematerjalid)
