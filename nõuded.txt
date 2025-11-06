@@ -1,0 +1,73 @@
+Library Management System Database Project
+
+
+Tarvis on koostada haldussüsteem ühe nö valduse alla ühinevatele koolidele.
+Võite abiks võtta juba olemasoleva kooli andmebaasi, kui omate sellist.
+
+Toimus nö koosolek koolide äriinimestega ja nemad seletasid umbes järgnevat (nõuded muutuvad meil aja jooksul, kui selgub, et üks või teine asi ei ole päris hea)
+
+Koolide haldus
+    • Süsteemis saab lisada mitmeid koole.
+    • Igal koolil on unikaalne nimi ja asukoht.
+Rühmade haldus
+    • Igal koolil on üks või mitu rühma (nt 10A, 11B).
+    • Rühmad kuuluvad alati kindla kooli alla.
+Õpilaste haldus
+    • Õpilased kuuluvad alati ühte rühma.
+    • Õpilase kohta salvestatakse eesnimi ja perenimi.
+    • Sama nimega õpilasi võib esineda mitmes rühmas.
+    • Õpilastel on ka esindajad
+Õpetajate haldus
+    • Õpetajad on seotud ühe kindla kooliga.
+    • Õpetaja kohta salvestatakse ees- ja perenimi.
+    • Õpetaja võib õpetada mitmele rühmale ja mitut ainet.
+    • Kindlasti peavad süsteemis olema ka õpetajate palgaandmed ning teave palkade väljamaksete kohta
+    • Õpetajate kohta tuleb sisestada ka kontaktandmed: arvestada tuleb, et ühel õpetajal võib olla mitu kontaktelefoni või aadressi     
+Tundide haldus
+    • Õppetunnid seotakse õpetaja ja rühmaga.
+    • Tunni kohta säilitatakse aine nimi ja kuupäev.
+    • Iga tund kuulub konkreetsele rühmale.
+Hinnete haldus
+    • Iga hinne on seotud konkreetse õpilase ja tunniga.
+    • Hindeks lubatud väärtused on 1 kuni 5 (või muu skaalaga vastavalt vajadusele).
+    • Hinnetele võib lisada vabatekstilise kommentaari (nt „puudus”, „hilines”).
+Klassid
+    • Ruumid
+    • Muu info, näiteks töömehele, kel tarvis remonti teha
+
+MITTEFUNKTSIONAALSED NÕUDED
+    • Süsteem peab toetama andmebaasi laiendatavust (nt uued koolid, uued ained).
+    • Andmed peavad olema relatsiooniliselt seotud, vältides andmete dubleerimist (normaliseerimine).
+    • Kõik väljad peavad kasutama sobivat andmetüüpi.
+    • Andmebaasis peab olema võimalik andmeid filtreerida ja liita (JOIN-id).
+    • Vajalik on andmete sisestus- ja päringukiirus mõistlikul tasemel.
+
+SEOSENÕUDED
+    • Iga rühm kuulub ühele koolile.
+    • Iga õpilane kuulub ühele rühmale.
+    • Iga õpetaja kuulub ühele koolile.
+    • Iga tund on seotud ühe õpetaja ja ühe rühmaga.
+    • Iga hinne on seotud ühe õpilase ja ühe konkreetse tunniga.
+
+Süsteemis peab olema võimalus tekitada ligipääs erinevate rollidega kasutajatele:
+KASUTAJA STSENAARIUMID (näited)
+Kasutaja A (koolisekretär):
+    • Lisab uue rühma koolile.
+    • Lisab uue õpilase rühma.
+    • Kontrollib, millised õpetajad õpetavad rühmas 10A.
+Kasutaja B (õpetaja):
+    • Lisab oma tunnile õpilaste hinded.
+    • Soovib vaadata, millised hinded andis ta 10. septembri matemaatika tunnis.
+Kasutaja C (õpilane või lapsevanem):
+    • Soovib näha enda (või lapse) viimase kuu hinnete kokkuvõtet.
+
+LAIENDUSVÕIMALUSED - võimalused, millest ei olnud veel aega kokku leppida
+    • Õppeainete tabel eraldi (normaliseerimiseks)
+    • Kasutajakontod (õpilased, õpetajad, administraatorid)
+    • Puudumiste haldus
+    • Tunniplaan
+    • Inventar
+
+
+Kasutajate tegemine - näidis.
+Esmalt teeme rolli ja siis lisame kasutajale rolli.
