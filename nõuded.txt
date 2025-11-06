@@ -10,7 +10,7 @@ hoiab ja müüb raamatuid nii füüsilisel kui ka digitaalsel kujul;
 liikmetel on vastavalt oma auastmele spetsiifilised allahindlused;
 kasutajad saavad laenutada raamatuid, ning süsteem peab salvestama laenutatud raamatud ja hoiatussüsteemi kaudu teavitama enne tähtaega kasutajaid.
 
-Andmemudel
+Andmemudel (ei ole andmebaaside skeem)
 Raamatud
  - barcode
  - title
