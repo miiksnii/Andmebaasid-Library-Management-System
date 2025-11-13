@@ -1,40 +1,38 @@
+-- create database library;
+use library;
 
-CREATE TABLE IF NOT EXISTS  works (
+-- Tabel teoste (works) jaoks (normaliseeritud)
+CREATE TABLE IF NOT EXISTS works (
     work_id INT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
     release_date DATE,
     language VARCHAR(50),
     publisher VARCHAR(100),
-    pages INT,
-    authors VARCHAR(255) 
+    pages INT
 );
 
-CREATE TABLE IF NOT EXISTS  employees (
-    employee_id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT UNIQUE,
+-- Tabel autorite jaoks (üks töö võib olla mitme autoriga)
+CREATE TABLE IF NOT EXISTS authors (
+    author_id INT AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(50) NOT NULL,
-    last_name VARCHAR(50) NOT NULL,
-    department VARCHAR(50),
-    age INT,
-    salary DECIMAL(10,2),
-    bonus DECIMAL(10,2),
-    phone_number VARCHAR(20),
-    FOREIGN KEY (user_id) REFERENCES users(user_id)
+    last_name VARCHAR(50) NOT NULL
 );
 
-
-CREATE TABLE IF NOT EXISTS  works (
-    work_id INT AUTO_INCREMENT PRIMARY KEY,
-    title VARCHAR(255) NOT NULL,
-    release_date DATE,
-    language VARCHAR(50),
-    publisher VARCHAR(100),
-    pages INT,
-    authors VARCHAR(255)
+-- Seostabel teoste ja autorite vahel (many-to-many)
+CREATE TABLE IF NOT EXISTS work_authors (
+    work_id INT NOT NULL,
+    author_id INT NOT NULL,
+    PRIMARY KEY (work_id, author_id),
+    FOREIGN KEY (work_id) REFERENCES works(work_id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
+    FOREIGN KEY (author_id) REFERENCES authors(author_id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
 );
 
-
-CREATE TABLE IF NOT EXISTS  books (
+-- Raamatud, mis viitavad teosele
+CREATE TABLE IF NOT EXISTS books (
     book_id INT AUTO_INCREMENT PRIMARY KEY,
     work_id INT NOT NULL,
     barcode VARCHAR(100) UNIQUE NOT NULL,
@@ -45,8 +43,29 @@ CREATE TABLE IF NOT EXISTS  books (
         ON DELETE RESTRICT
 );
 
+-- Liikmed
+CREATE TABLE IF NOT EXISTS members (
+    member_id INT AUTO_INCREMENT PRIMARY KEY,
+    status ENUM('Tavaline', 'Kuldliige', 'VIP') NOT NULL,
+    personal_code VARCHAR(50) UNIQUE NOT NULL,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL
+);
 
-CREATE TABLE IF NOT EXISTS  loans (
+-- Töötajad
+CREATE TABLE IF NOT EXISTS employees (
+    employee_id INT AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    department VARCHAR(50),
+    age INT,
+    salary DECIMAL(10,2),
+    bonus DECIMAL(10,2),
+    phone_number VARCHAR(20)
+);
+
+-- Laenutused
+CREATE TABLE IF NOT EXISTS loans (
     loan_id INT AUTO_INCREMENT PRIMARY KEY,
     member_id INT NOT NULL,
     book_id INT NOT NULL,
@@ -62,7 +81,7 @@ CREATE TABLE IF NOT EXISTS  loans (
     CONSTRAINT chk_loan_period CHECK (loan_end >= loan_start)
 );
 
-
+-- Trigger raamatute staatuse uuendamiseks laenutuse lisamisel
 DELIMITER $$
 
 CREATE TRIGGER trg_book_on_loan
@@ -86,4 +105,3 @@ BEGIN
 END$$
 
 DELIMITER ;
-
