@@ -3,7 +3,7 @@ use library;
 INSERT INTO works (title, release_date, language, publisher, pages) VALUES
 ('The Great Gatsby', '1925-04-10', 'English', 'Scribner', 218),
 ('Pride and Prejudice', '1813-01-28', 'English', 'T. Egerton', 279),
-('Harry Potter and the Sorcerer\'s Stone', '1997-06-26', 'English', 'Bloomsbury', 223);
+('Harry Potter and the Sorcerers Stone', '1997-06-26', 'English', 'Bloomsbury', 223);
 
 INSERT INTO authors (first_name, last_name) VALUES
 ('F. Scott', 'Fitzgerald'),
@@ -34,3 +34,16 @@ INSERT INTO employees (first_name, last_name, department, age, salary, bonus, ph
 INSERT INTO loans (member_id, book_id, loan_start, loan_end) VALUES
 (1, 1, '2025-11-01', '2025-11-15'),
 (2, 3, '2025-11-05', '2025-11-20');
+
+INSERT INTO members (status, personal_code, first_name, last_name)
+VALUES 
+('Tavaline', '50001010011', 'Mati', 'Kask'),
+('Kuldliige', '60002020022', 'Kadri', 'Tamm'),
+('VIP', '70003030033', 'Juhan', 'Põld');
+
+INSERT INTO members (status, personal_code, first_name, last_name)
+VALUES ('Tavaline', '80004040044', 'Laura', 'Mets');
+
+-- trigger test, addst to members_history table
+DELETE FROM members
+WHERE member_id = 1;

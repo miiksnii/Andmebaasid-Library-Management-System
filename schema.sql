@@ -81,6 +81,18 @@ CREATE TABLE IF NOT EXISTS loans (
     CONSTRAINT chk_loan_period CHECK (loan_end >= loan_start)
 );
 
+CREATE TABLE IF NOT EXISTS members_history (
+    history_id INT AUTO_INCREMENT PRIMARY KEY,
+    member_id INT NOT NULL,
+    status ENUM('Tavaline', 'Kuldliige', 'VIP'),
+    personal_code VARCHAR(50),
+    first_name VARCHAR(50),
+    last_name VARCHAR(50),
+    deleted_at DATETIME NOT NULL
+);
+
+
+
 -- Trigger raamatute staatuse uuendamiseks laenutuse lisamisel
 DELIMITER $$
 
@@ -102,6 +114,31 @@ BEGIN
         SET status = 'Vaba'
         WHERE book_id = NEW.book_id;
     END IF;
+END$$
+
+DELIMITER ;
+
+DELIMITER $$
+
+CREATE TRIGGER trg_members_delete_history
+BEFORE DELETE ON members
+FOR EACH ROW
+BEGIN
+    INSERT INTO members_history (
+        member_id,
+        status,
+        personal_code,
+        first_name,
+        last_name,
+        deleted_at
+    ) VALUES (
+        OLD.member_id,
+        OLD.status,
+        OLD.personal_code,
+        OLD.first_name,
+        OLD.last_name,
+        NOW()
+    );
 END$$
 
 DELIMITER ;
