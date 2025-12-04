@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS works (
     release_date DATE,
     language VARCHAR(50) NOT NULL,
     publisher VARCHAR(100),
-    file_path VARCHAR(4096) UNIQUE NOT NULL, -- linux-i maksimaalne file_path pikkus     
+    file_path VARCHAR(4096) UNIQUE, -- linux-i maksimaalne file_path pikkus. ei ole NOT NULL, sest peab hoidma ka füüsilisi raamatute logisid
     pages BIGINT,           
     UNIQUE(title, release_date, publisher)
 );
@@ -50,12 +50,15 @@ CREATE TABLE IF NOT EXISTS books (
 -- Liikmed
 CREATE TABLE IF NOT EXISTS members (
     personal_code VARCHAR(50) PRIMARY KEY, -- läbi selle kontrollitakse, et liiget ei saaks mitu teha    
-    status ENUM ('Tavaline', 'Kuldliige', 'VIP') NOT NULL
+    status ENUM ('Tavaline', 'Kuldliige', 'VIP') NOT NULL,
+    first_name VARCHAR(50) NOT NULL, --  need on listaud, et liiget oleks praktilisem leida, nt küsitakse, mis su nimi on, et leida kas oled raamatukogu liige
+    last_name VARCHAR(50) NOT NULL,         
 );
 
 -- Töötajad
 CREATE TABLE IF NOT EXISTS employees (    
     personal_code VARCHAR(50) PRIMARY KEY, -- läbi selle kontrollitakse, et töötajat ei saaks mitu teha
+    first_name VARCHAR(50) NOT NULL,
     last_name VARCHAR(50) NOT NULL,
     department VARCHAR(50),
     age INT,
@@ -70,7 +73,7 @@ CREATE TABLE IF NOT EXISTS loans (
     member_id VARCHAR(50) NOT NULL,
     book_id INT NOT NULL UNIQUE,
     loan_start DATE NOT NULL,
-    loan_end DATE NOT NULL,    
+    loan_end DATE NOT NULL, -- kasutatakse, et laenutaja viiks raamatu tagasi, nt saadetakse meil, kui loan_end kuupäev on minevikus    
     FOREIGN KEY (member_id) REFERENCES members(personal_code) 
         ON UPDATE CASCADE 
         ON DELETE RESTRICT, -- saab kustutada ainult siis kui liikmel ei ole laenutatud raamatuid - trigger: member_prevent_delete_on_loaned_books
