@@ -10,6 +10,8 @@ hoiab ja müüb raamatuid nii füüsilisel kui ka digitaalsel kujul;
 liikmetel on vastavalt oma auastmele spetsiifilised allahindlused;
 kasutajad saavad laenutada raamatuid, ning süsteem peab salvestama laenutatud raamatud ja hoiatussüsteemi kaudu teavitama enne tähtaega kasutajaid.
 
+kasutaja ei pea sisse logima, et osta raamatuid, kuid peab kui tahab laenutada
+
 Andmemudel (ei ole andmebaaside skeem)
 Raamatud
  - barcode
@@ -65,13 +67,6 @@ Lisab töötajaid
 Lisab ja haldab liikmeid
 Jälgib süsteemi logisid ja statistikat
 
-Laiendusvõimalused
-Tulevikus võib süsteemi täiendada järgmiste võimalustega:
- - Õppeainete tabel (andmebaasi normaliseerimiseks ja kooliraamatukogude integreerimiseks)
- - Kasutajakontod erinevate rollidega (õpilased, õpetajad, administraatorid)
- - Puudumiste haldus (õppeasutuse kontekstis)
- - Tunniplaani haldus
- - Inventari jälgimine (näiteks seadmed, õppematerjalid)
 
  Probleem:
  Raamatute tabel on normaliseerimata
