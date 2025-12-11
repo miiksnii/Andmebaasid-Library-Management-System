@@ -1,0 +1,77 @@
+Table works {
+  id int [pk, increment]
+  title varchar(255) [not null]
+  release_date date
+  language varchar(50) [not null]
+  publisher varchar(100)
+  file_path varchar(4096) [unique]
+  pages bigint
+  indexes {
+    (title, release_date, publisher) [unique]
+  }
+}
+
+Table authors {
+  id int [pk, increment]
+  first_name varchar(128) [not null]
+  last_name varchar(128) [not null]
+}
+
+Table authors_works {
+  author_id int [not null, ref: > authors.id]
+  work_id int [not null, ref: > works.id]
+  indexes {
+    (author_id, work_id) [unique]
+  }
+}
+
+Table books {
+  id int [pk, increment]
+  work_id int [not null, unique, ref: > works.id]
+  ISBN varchar(32) [not null, unique]
+  format enum('Füüsiline', 'Digitaalne') [not null]
+  status enum('Vaba', 'Laenutatud', 'Ostetud') [default: 'Vaba']
+}
+
+Table members {
+  personal_code varchar(50) [pk]
+  status enum('Tavaline', 'Kuldliige', 'VIP') [not null]
+  first_name varchar(50) [not null]
+  last_name varchar(50) [not null]
+}
+
+Table employees {
+  personal_code varchar(50) [pk]
+  first_name varchar(50) [not null]
+  last_name varchar(50) [not null]
+  department varchar(50)
+  age int
+  salary decimal(10, 2)
+  bonus decimal(10, 2)
+  phone_number varchar(20)
+}
+
+Table loans {
+  id int [pk, increment]
+  member_id varchar(50) [not null, ref: > members.personal_code]
+  book_id int [not null, unique, ref: > books.id]
+  loan_start date [not null]
+  loan_end date [not null]
+}
+
+Table loans_history {
+  id int [pk, increment]
+  loan_id int
+  member_id varchar(50) [ref: > members.personal_code]
+  book_id int [ref: > books.id]
+  loan_start date [not null]
+  loan_end date [not null]
+  return_date timestamp [default: `CURRENT_TIMESTAMP`]
+}
+
+Table orders {
+  id int [pk, increment]
+  book_id int [ref: > books.id]
+  order_date timestamp [default: `CURRENT_TIMESTAMP`]
+  status enum('Active', 'Completed', 'Cancelled') [default: 'Active']
+}
