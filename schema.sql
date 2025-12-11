@@ -1,4 +1,4 @@
--- create database library;
+create database library;
 use library;
 
 -- Tabel teoste jaoks
@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS members (
     personal_code VARCHAR(50) PRIMARY KEY, -- läbi selle kontrollitakse, et liiget ei saaks mitu teha    
     status ENUM ('Tavaline', 'Kuldliige', 'VIP') NOT NULL,
     first_name VARCHAR(50) NOT NULL, --  need on listaud, et liiget oleks praktilisem leida, nt küsitakse, mis su nimi on, et leida kas oled raamatukogu liige
-    last_name VARCHAR(50) NOT NULL,         
+    last_name VARCHAR(50) NOT NULL    
 );
 
 -- Töötajad

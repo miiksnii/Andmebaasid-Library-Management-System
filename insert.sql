@@ -1,260 +1,56 @@
-use library;
+USE library;
 
--- === 100 NEW WORKS ===
+-- === 1. Insert Authors ===
+INSERT INTO authors (first_name, last_name) VALUES
+('John', 'Doe'),
+('Jane', 'Smith'),
+('Alice', 'Johnson'),
+('Bob', 'Brown');
+
+-- === 2. Insert Works ===
 INSERT INTO works (title, release_date, language, publisher, pages) VALUES
-('Work Title 001', '2001-01-01', 'English', 'Publisher A', 201),
-('Work Title 002', '2002-01-01', 'English', 'Publisher B', 202),
-('Work Title 003', '2003-01-01', 'English', 'Publisher C', 203),
-('Work Title 004', '2004-01-01', 'English', 'Publisher D', 204),
-('Work Title 005', '2005-01-01', 'English', 'Publisher E', 205),
-('Work Title 006', '2006-01-01', 'English', 'Publisher F', 206),
-('Work Title 007', '2007-01-01', 'English', 'Publisher G', 207),
-('Work Title 008', '2008-01-01', 'English', 'Publisher H', 208),
-('Work Title 009', '2009-01-01', 'English', 'Publisher I', 209),
-('Work Title 010', '2010-01-01', 'English', 'Publisher J', 210),
-('Work Title 011', '2011-01-01', 'English', 'Publisher K', 211),
-('Work Title 012', '2012-01-01', 'English', 'Publisher L', 212),
-('Work Title 013', '2013-01-01', 'English', 'Publisher M', 213),
-('Work Title 014', '2014-01-01', 'English', 'Publisher N', 214),
-('Work Title 015', '2015-01-01', 'English', 'Publisher O', 215),
-('Work Title 016', '2016-01-01', 'English', 'Publisher P', 216),
-('Work Title 017', '2017-01-01', 'English', 'Publisher Q', 217),
-('Work Title 018', '2018-01-01', 'English', 'Publisher R', 218),
-('Work Title 019', '2019-01-01', 'English', 'Publisher S', 219),
-('Work Title 020', '2020-01-01', 'English', 'Publisher T', 220),
-('Work Title 021', '2001-02-01', 'English', 'Publisher A', 221),
-('Work Title 022', '2002-02-01', 'English', 'Publisher B', 222),
-('Work Title 023', '2003-02-01', 'English', 'Publisher C', 223),
-('Work Title 024', '2004-02-01', 'English', 'Publisher D', 224),
-('Work Title 025', '2005-02-01', 'English', 'Publisher E', 225),
-('Work Title 026', '2006-02-01', 'English', 'Publisher F', 226),
-('Work Title 027', '2007-02-01', 'English', 'Publisher G', 227),
-('Work Title 028', '2008-02-01', 'English', 'Publisher H', 228),
-('Work Title 029', '2009-02-01', 'English', 'Publisher I', 229),
-('Work Title 030', '2010-02-01', 'English', 'Publisher J', 230),
-('Work Title 031', '2011-02-01', 'English', 'Publisher K', 231),
-('Work Title 032', '2012-02-01', 'English', 'Publisher L', 232),
-('Work Title 033', '2013-02-01', 'English', 'Publisher M', 233),
-('Work Title 034', '2014-02-01', 'English', 'Publisher N', 234),
-('Work Title 035', '2015-02-01', 'English', 'Publisher O', 235),
-('Work Title 036', '2016-02-01', 'English', 'Publisher P', 236),
-('Work Title 037', '2017-02-01', 'English', 'Publisher Q', 237),
-('Work Title 038', '2018-02-01', 'English', 'Publisher R', 238),
-('Work Title 039', '2019-02-01', 'English', 'Publisher S', 239),
-('Work Title 040', '2020-02-01', 'English', 'Publisher T', 240),
-('Work Title 041', '2001-03-01', 'English', 'Publisher A', 241),
-('Work Title 042', '2002-03-01', 'English', 'Publisher B', 242),
-('Work Title 043', '2003-03-01', 'English', 'Publisher C', 243),
-('Work Title 044', '2004-03-01', 'English', 'Publisher D', 244),
-('Work Title 045', '2005-03-01', 'English', 'Publisher E', 245),
-('Work Title 046', '2006-03-01', 'English', 'Publisher F', 246),
-('Work Title 047', '2007-03-01', 'English', 'Publisher G', 247),
-('Work Title 048', '2008-03-01', 'English', 'Publisher H', 248),
-('Work Title 049', '2009-03-01', 'English', 'Publisher I', 249),
-('Work Title 050', '2010-03-01', 'English', 'Publisher J', 250),
-('Work Title 051', '2011-03-01', 'English', 'Publisher K', 251),
-('Work Title 052', '2012-03-01', 'English', 'Publisher L', 252),
-('Work Title 053', '2013-03-01', 'English', 'Publisher M', 253),
-('Work Title 054', '2014-03-01', 'English', 'Publisher N', 254),
-('Work Title 055', '2015-03-01', 'English', 'Publisher O', 255),
-('Work Title 056', '2016-03-01', 'English', 'Publisher P', 256),
-('Work Title 057', '2017-03-01', 'English', 'Publisher Q', 257),
-('Work Title 058', '2018-03-01', 'English', 'Publisher R', 258),
-('Work Title 059', '2019-03-01', 'English', 'Publisher S', 259),
-('Work Title 060', '2020-03-01', 'English', 'Publisher T', 260),
-('Work Title 061', '2001-04-01', 'English', 'Publisher A', 261),
-('Work Title 062', '2002-04-01', 'English', 'Publisher B', 262),
-('Work Title 063', '2003-04-01', 'English', 'Publisher C', 263),
-('Work Title 064', '2004-04-01', 'English', 'Publisher D', 264),
-('Work Title 065', '2005-04-01', 'English', 'Publisher E', 265),
-('Work Title 066', '2006-04-01', 'English', 'Publisher F', 266),
-('Work Title 067', '2007-04-01', 'English', 'Publisher G', 267),
-('Work Title 068', '2008-04-01', 'English', 'Publisher H', 268),
-('Work Title 069', '2009-04-01', 'English', 'Publisher I', 269),
-('Work Title 070', '2010-04-01', 'English', 'Publisher J', 270),
-('Work Title 071', '2011-04-01', 'English', 'Publisher K', 271),
-('Work Title 072', '2012-04-01', 'English', 'Publisher L', 272),
-('Work Title 073', '2013-04-01', 'English', 'Publisher M', 273),
-('Work Title 074', '2014-04-01', 'English', 'Publisher N', 274),
-('Work Title 075', '2015-04-01', 'English', 'Publisher O', 275),
-('Work Title 076', '2016-04-01', 'English', 'Publisher P', 276),
-('Work Title 077', '2017-04-01', 'English', 'Publisher Q', 277),
-('Work Title 078', '2018-04-01', 'English', 'Publisher R', 278),
-('Work Title 079', '2019-04-01', 'English', 'Publisher S', 279),
-('Work Title 080', '2020-04-01', 'English', 'Publisher T', 280),
-('Work Title 081', '2001-05-01', 'English', 'Publisher A', 281),
-('Work Title 082', '2002-05-01', 'English', 'Publisher B', 282),
-('Work Title 083', '2003-05-01', 'English', 'Publisher C', 283),
-('Work Title 084', '2004-05-01', 'English', 'Publisher D', 284),
-('Work Title 085', '2005-05-01', 'English', 'Publisher E', 285),
-('Work Title 086', '2006-05-01', 'English', 'Publisher F', 286),
-('Work Title 087', '2007-05-01', 'English', 'Publisher G', 287),
-('Work Title 088', '2008-05-01', 'English', 'Publisher H', 288),
-('Work Title 089', '2009-05-01', 'English', 'Publisher I', 289),
-('Work Title 090', '2010-05-01', 'English', 'Publisher J', 290),
-('Work Title 091', '2011-05-01', 'English', 'Publisher K', 291),
-('Work Title 092', '2012-05-01', 'English', 'Publisher L', 292),
-('Work Title 093', '2013-05-01', 'English', 'Publisher M', 293),
-('Work Title 094', '2014-05-01', 'English', 'Publisher N', 294),
-('Work Title 095', '2015-05-01', 'English', 'Publisher O', 295),
-('Work Title 096', '2016-05-01', 'English', 'Publisher P', 296),
-('Work Title 097', '2017-05-01', 'English', 'Publisher Q', 297),
-('Work Title 098', '2018-05-01', 'English', 'Publisher R', 298),
-('Work Title 099', '2019-05-01', 'English', 'Publisher S', 299),
-('Work Title 100', '2020-05-01', 'English', 'Publisher T', 300);
+('Learn SQL', '2020-01-01', 'English', 'TechBooks', 350),
+('Advanced PHP', '2019-05-15', 'English', 'CodePress', 420),
+('Database Design', '2021-08-20', 'English', 'DBPublishers', 280),
+('Modern Web', '2022-03-10', 'English', 'WebBooks', 310);
 
--- === 100 NEW AUTHORS ===
-INSERT INTO authors (first_name, last_name) VALUES
-('Author001', 'Lastname001'),
-('Author002', 'Lastname002'),
-('Author003', 'Lastname003'),
-('Author004', 'Lastname004'),
-('Author005', 'Lastname005'),
-('Author006', 'Lastname006'),
-('Author007', 'Lastname007'),
-('Author008', 'Lastname008'),
-('Author009', 'Lastname009'),
-('Author010', 'Lastname010'),
-('Author011', 'Lastname011'),
-('Author012', 'Lastname012'),
-('Author013', 'Lastname013'),
-('Author014', 'Lastname014'),
-('Author015', 'Lastname015'),
-('Author016', 'Lastname016'),
-('Author017', 'Lastname017'),
-('Author018', 'Lastname018'),
-('Author019', 'Lastname019'),
-('Author020', 'Lastname020'),
-('Author021', 'Lastname021'),
-('Author022', 'Lastname022'),
-('Author023', 'Lastname023'),
-('Author024', 'Lastname024'),
-('Author025', 'Lastname025'),
-('Author026', 'Lastname026'),
-('Author027', 'Lastname027'),
-('Author028', 'Lastname028'),
-('Author029', 'Lastname029'),
-('Author030', 'Lastname030'),
-('Author031', 'Lastname031'),
-('Author032', 'Lastname032'),
-('Author033', 'Lastname033'),
-('Author034', 'Lastname034'),
-('Author035', 'Lastname035'),
-('Author036', 'Lastname036'),
-('Author037', 'Lastname037'),
-('Author038', 'Lastname038'),
-('Author039', 'Lastname039'),
-('Author040', 'Lastname040'),
-('Author041', 'Lastname041'),
-('Author042', 'Lastname042'),
-('Author043', 'Lastname043'),
-('Author044', 'Lastname044'),
-('Author045', 'Lastname045'),
-('Author046', 'Lastname046'),
-('Author047', 'Lastname047'),
-('Author048', 'Lastname048'),
-('Author049', 'Lastname049'),
-('Author050', 'Lastname050'),
-('Author051', 'Lastname051'),
-('Author052', 'Lastname052'),
-('Author053', 'Lastname053'),
-('Author054', 'Lastname054'),
-('Author055', 'Lastname055'),
-('Author056', 'Lastname056'),
-('Author057', 'Lastname057'),
-('Author058', 'Lastname058'),
-('Author059', 'Lastname059'),
-('Author060', 'Lastname060'),
-('Author061', 'Lastname061'),
-('Author062', 'Lastname062'),
-('Author063', 'Lastname063'),
-('Author064', 'Lastname064'),
-('Author065', 'Lastname065'),
-('Author066', 'Lastname066'),
-('Author067', 'Lastname067'),
-('Author068', 'Lastname068'),
-('Author069', 'Lastname069'),
-('Author070', 'Lastname070'),
-('Author071', 'Lastname071'),
-('Author072', 'Lastname072'),
-('Author073', 'Lastname073'),
-('Author074', 'Lastname074'),
-('Author075', 'Lastname075'),
-('Author076', 'Lastname076'),
-('Author077', 'Lastname077'),
-('Author078', 'Lastname078'),
-('Author079', 'Lastname079'),
-('Author080', 'Lastname080'),
-('Author081', 'Lastname081'),
-('Author082', 'Lastname082'),
-('Author083', 'Lastname083'),
-('Author084', 'Lastname084'),
-('Author085', 'Lastname085'),
-('Author086', 'Lastname086'),
-('Author087', 'Lastname087'),
-('Author088', 'Lastname088'),
-('Author089', 'Lastname089'),
-('Author090', 'Lastname090'),
-('Author091', 'Lastname091'),
-('Author092', 'Lastname092'),
-('Author093', 'Lastname093'),
-('Author094', 'Lastname094'),
-('Author095', 'Lastname095'),
-('Author096', 'Lastname096'),
-('Author097', 'Lastname097'),
-('Author098', 'Lastname098'),
-('Author099', 'Lastname099'),
-('Author100', 'Lastname100');
+-- === 3. Link Authors to Works ===
+INSERT INTO authors_works (author_id, work_id) VALUES
+(1, 1), -- John Doe -> Learn SQL
+(2, 2), -- Jane Smith -> Advanced PHP
+(3, 3), -- Alice Johnson -> Database Design
+(4, 4), -- Bob Brown -> Modern Web
+(2, 3); -- Jane Smith also contributed to Database Design
 
-INSERT INTO work_authors (work_id, author_id)
-SELECT w.work_id, a.author_id
-FROM (SELECT work_id FROM works) AS w
-JOIN (SELECT author_id FROM authors ORDER BY RAND()) AS a
-ON w.work_id = a.author_id % (SELECT COUNT(*) FROM authors) + 1;
+-- === 4. Insert Books ===
+INSERT INTO books (work_id, ISBN, format, status) VALUES
+(1, '978-1-23456-001-0', 'Füüsiline', 'Vaba'),
+(2, '978-1-23456-002-7', 'Digitaalne', 'Vaba'),
+(3, '978-1-23456-003-4', 'Füüsiline', 'Laenutatud'),
+(4, '978-1-23456-004-1', 'Digitaalne', 'Ostetud');
 
-INSERT INTO books (work_id, barcode, format)
-SELECT work_id, CONCAT('B', LPAD(work_id,5,'0')), 'Füüsiline'
-FROM works;
+-- === 5. Insert Members ===
+INSERT INTO members (personal_code, status, first_name, last_name) VALUES
+('M1001', 'Tavaline', 'Tom', 'Harris'),
+('M1002', 'Kuldliige', 'Sara', 'Connor'),
+('M1003', 'VIP', 'Liam', 'Smith');
 
-INSERT INTO authors (first_name, last_name) VALUES
-('F. Scott', 'Fitzgerald'),
-('Jane', 'Austen'),
-('J.K.', 'Rowling');
+-- === 6. Insert Employees ===
+INSERT INTO employees (personal_code, first_name, last_name, department, age, salary, bonus, phone_number) VALUES
+('E2001', 'Alice', 'Wong', 'Lending', 35, 3500.00, 500.00, '555-1001'),
+('E2002', 'Mark', 'Lee', 'IT', 40, 4000.00, 700.00, '555-1002');
 
-INSERT INTO work_authors (work_id, author_id) VALUES
-(1, 1),  -- The Great Gatsby → F. Scott Fitzgerald
-(2, 2),  -- Pride and Prejudice → Jane Austen
-(3, 3);  -- Harry Potter → J.K. Rowling
-
-INSERT INTO books (work_id, barcode, format) VALUES
-(1, 'B10001', 'Füüsiline'),
-(1, 'B10002', 'Digitaalne'),
-(2, 'B20001', 'Füüsiline'),
-(3, 'B30001', 'Füüsiline'),
-(3, 'B30002', 'Digitaalne');
-
-INSERT INTO members (status, personal_code, first_name, last_name) VALUES
-('Tavaline', '1234567890', 'Alice', 'Smith'),
-('Kuldliige', '2345678901', 'Bob', 'Johnson'),
-('VIP', '3456789012', 'Charlie', 'Brown');
-
-INSERT INTO employees (first_name, last_name, department, age, salary, bonus, phone_number) VALUES
-('David', 'Miller', 'Acquisitions', 35, 3500.00, 300.00, '555-0101'),
-('Emma', 'Davis', 'Loans', 29, 3200.00, 250.00, '555-0102');
-
+-- === 7. Insert Loans ===
 INSERT INTO loans (member_id, book_id, loan_start, loan_end) VALUES
-(1, 1, '2025-11-01', '2025-11-15'),
-(2, 3, '2025-11-05', '2025-11-20');
+('M1001', 1, '2025-12-01', '2025-12-15'),
+('M1002', 3, '2025-11-25', '2025-12-10');
 
-INSERT INTO members (status, personal_code, first_name, last_name)
-VALUES 
-('Tavaline', '50001010011', 'Mati', 'Kask'),
-('Kuldliige', '60002020022', 'Kadri', 'Tamm'),
-('VIP', '70003030033', 'Juhan', 'Põld');
+-- === 8. Insert Loans History ===
+INSERT INTO loans_history (loan_id, member_id, book_id, loan_start, loan_end, return_date) VALUES
+(1, 'M1001', 1, '2025-12-01', '2025-12-15', '2025-12-12 10:00:00'),
+(2, 'M1002', 3, '2025-11-25', '2025-12-10', '2025-12-09 14:30:00');
 
-INSERT INTO members (status, personal_code, first_name, last_name)
-VALUES ('Tavaline', '80004040044', 'Laura', 'Mets');
-
--- trigger test, addst to members_history table
-DELETE FROM members
-WHERE member_id = 1;
+-- === 9. Insert Orders ===
+INSERT INTO orders (book_id, order_date, status) VALUES
+(2, '2025-12-11 12:00:00', 'Active'),
+(4, '2025-12-10 09:30:00', 'Completed');
