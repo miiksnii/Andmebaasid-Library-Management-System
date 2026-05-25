@@ -1,0 +1,9 @@
+{
+  "type": "module",
+  "scripts": {
+    "start:bank": "bun run bank-server/server.js",
+    "start:library": "bun run library-server/server.js",
+    "db:clear": "bun run scripts/clear-postgres-data.js",
+    "test:e2e": "bun test tests/subscription.e2e.test.js"
+  }
+}

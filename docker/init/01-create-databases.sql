@@ -1,0 +1,2 @@
+CREATE DATABASE bank;
+CREATE DATABASE library;
