@@ -1,5 +1,11 @@
 # Kiire testimine õpetajale
 
+## Vajalikud tehnoloogiad
+
+1. Docker Desktop
+2. Bun
+3. Veebibrauser
+
 Eesmärk: kontrollida, et raamatukogu server kasutab pangaserverit tellimuse maksmiseks.
 
 Projekt kasutab kahte PostgreSQL andmebaasi:
