@@ -1,0 +1,490 @@
+<!doctype html>
+<html lang="et">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Raamatukogu testi leht</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      color: #1f2933;
+    }
+
+    main {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: 28px;
+    }
+
+    h2 {
+      margin: 0 0 12px;
+      font-size: 18px;
+    }
+
+    p {
+      margin: 0 0 16px;
+      line-height: 1.4;
+    }
+
+    section {
+      margin-top: 16px;
+      padding: 16px;
+      background: white;
+      border: 1px solid #d8dee6;
+      border-radius: 8px;
+    }
+
+    label {
+      display: block;
+      margin-top: 10px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    input {
+      box-sizing: border-box;
+      width: 100%;
+      margin-top: 4px;
+      padding: 9px 10px;
+      border: 1px solid #b8c2cc;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+
+    button {
+      margin: 8px 8px 0 0;
+      padding: 10px 12px;
+      border: 0;
+      border-radius: 6px;
+      background: #1f6feb;
+      color: white;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    button.secondary {
+      background: #46515f;
+    }
+
+    button.danger {
+      background: #b42318;
+    }
+
+    pre {
+      min-height: 160px;
+      margin: 16px 0 0;
+      padding: 12px;
+      overflow: auto;
+      white-space: pre-wrap;
+      background: #111827;
+      color: #e5e7eb;
+      border-radius: 8px;
+      font-size: 13px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .note {
+      color: #52606d;
+      font-size: 14px;
+    }
+
+    @media (max-width: 700px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Raamatukogu ja pangaserveri kiire test</h1>
+    <p class="note">Käivita enne testimist pangaserver pordil 4001 ja raamatukogu server pordil 4000. Siis vajuta nuppe ülevalt alla.</p>
+    <p class="note">Pangaserver kasutab PostgreSQL andmebaasi <b>bank</b>. Raamatukogu server kasutab PostgreSQL andmebaasi <b>library</b>.</p>
+
+    <section>
+      <h2>Testi andmed</h2>
+      <div class="grid">
+        <label>
+          Raamatukogu API
+          <input id="libraryUrl" value="http://localhost:4000">
+        </label>
+        <label>
+          Panga API
+          <input id="bankUrl" value="http://localhost:4001">
+        </label>
+        <label>
+          Testkasutaja e-post
+          <input id="email" value="teacher@example.test">
+        </label>
+        <label>
+          Isikukood / liikme kood
+          <input id="personalCode" value="TEACHER-001">
+        </label>
+        <label>
+          Testkasutaja konto
+          <input id="debitAccount" value="5500000001">
+        </label>
+        <label>
+          Hind
+          <input id="amount" value="5">
+        </label>
+      </div>
+    </section>
+
+    <section>
+      <h2>1. Kontrolli servereid</h2>
+      <button id="checkServersButton">Kontrolli /health</button>
+      <button id="showAccountsButton" class="secondary">Näita pangakontosid</button>
+    </section>
+
+    <section>
+      <h2>2. Proovi enne maksmist</h2>
+      <p class="note">See peab ebaõnnestuma, sest kasutajal pole veel tellimuse tokenit.</p>
+      <button id="tryWithoutSubscriptionButton">Proovi lisada ilma tellimuseta</button>
+    </section>
+
+    <section>
+      <h2>3. Maksa tellimus</h2>
+      <p class="note">See kirjutab makse pangaserveri <b>bank</b> andmebaasi ja tellimuse raamatukogu <b>library</b> andmebaasi.</p>
+      <button id="payButton">Maksa tellimus</button>
+      <button id="loginButton" class="secondary">Login ja küsi token</button>
+    </section>
+
+    <section>
+      <h2>4. Testi pärast maksmist</h2>
+      <p class="note">Need tegevused kirjutavad raamatukogu <b>library</b> andmebaasi. Need töötavad alles siis, kui tellimus on makstud ja token olemas.</p>
+      <button id="createWorkButton">Lisa teos + raamatu eksemplar</button>
+      <button id="createBookButton">Lisa raamatu eksemplar</button>
+      <button id="showBooksButton" class="secondary">Näita library andmebaasi sisu</button>
+      <button id="updateWorkButton" class="secondary">Muuda teost</button>
+      <button id="deleteWorkButton" class="danger">Kustuta teos</button>
+    </section>
+
+    <section>
+      <h2>Tulemus</h2>
+      <pre id="output">Tulemused ilmuvad siia.</pre>
+    </section>
+  </main>
+
+  <script>
+    function readSaved(key) {
+      try {
+        return localStorage.getItem(key) || "";
+      } catch {
+        return "";
+      }
+    }
+
+    function saveValue(key, data) {
+      try {
+        localStorage.setItem(key, data);
+      } catch {
+        // Kui brauser keelab localStorage, töötab test ikka selles aknas edasi.
+      }
+    }
+
+    function removeSaved(key) {
+      try {
+        localStorage.removeItem(key);
+      } catch {
+        // Kui brauser keelab localStorage, ei pea siin midagi tegema.
+      }
+    }
+
+    function readJsonSaved(key, fallback) {
+      try {
+        return JSON.parse(localStorage.getItem(key)) || fallback;
+      } catch {
+        return fallback;
+      }
+    }
+
+    let token = readSaved("libraryToken");
+    let workIdStack = readJsonSaved("createdWorkIds", []);
+
+    const oldSingleWorkId = readSaved("createdWorkId");
+    if (oldSingleWorkId && !workIdStack.includes(Number(oldSingleWorkId))) {
+      workIdStack.push(Number(oldSingleWorkId));
+      saveValue("createdWorkIds", JSON.stringify(workIdStack));
+      removeSaved("createdWorkId");
+    }
+
+    function value(id) {
+      return document.getElementById(id).value.trim();
+    }
+
+    function log(title, data) {
+      document.getElementById("output").textContent =
+        `${title}\n\n${JSON.stringify(data, null, 2)}`;
+    }
+
+    function logText(text) {
+      document.getElementById("output").textContent = text;
+    }
+
+    async function run(title, action) {
+      logText(`${title}\n\nTöötan...`);
+
+      try {
+        await action();
+      } catch (error) {
+        log(`${title} ebaõnnestus`, {
+          error: error.message,
+          help: "Kontrolli, et PostgreSQL, pangaserver ja raamatukogu server töötavad.",
+          expectedCommands: [
+            "docker compose up -d",
+            "bun run start:bank",
+            "bun run start:library",
+          ],
+        });
+      }
+    }
+
+    async function request(baseUrl, path, options = {}) {
+      const response = await fetch(`${baseUrl}${path}`, {
+        method: options.method || "GET",
+        headers: {
+          ...(options.body ? { "content-type": "application/json" } : {}),
+          ...(options.token ? { authorization: `Bearer ${options.token}` } : {}),
+        },
+        body: options.body ? JSON.stringify(options.body) : undefined,
+      });
+
+      const data = await response.json().catch(() => ({}));
+      return { status: response.status, data };
+    }
+
+    async function checkServers() {
+      const library = await request(value("libraryUrl"), "/health");
+      const bank = await request(value("bankUrl"), "/health");
+      log("Serverite kontroll", { library, bank });
+    }
+
+    async function showAccounts() {
+      const result = await request(value("bankUrl"), "/accounts");
+      log("Pangakontod", result);
+    }
+
+    async function paySubscription() {
+      const result = await request(value("libraryUrl"), "/pay", {
+        method: "POST",
+        body: {
+          email: value("email"),
+          personalCode: value("personalCode"),
+          firstName: "Test",
+          lastName: "Teacher",
+          debitAccount: Number(value("debitAccount")),
+          amount: Number(value("amount")),
+          referenceNumber: Date.now(),
+        },
+      });
+
+      token = result.data.subscription?.token || token;
+      if (token) saveValue("libraryToken", token);
+      log("Tellimuse makse", result);
+    }
+
+    async function tryWithoutSubscription() {
+      const result = await request(value("libraryUrl"), "/works", {
+        method: "POST",
+        body: {
+          title: `Ilma tellimuseta test ${Date.now()}`,
+          releaseDate: "2026-05-25",
+          language: "Estonian",
+          publisher: "Test Kirjastus",
+          filePath: `/tmp/blocked-test-${Date.now()}.pdf`,
+          pages: 50,
+        },
+      });
+
+      log("Ilma tellimuseta lisamise proov", {
+        expected: "401 tähendab, et kaitse töötab ja enne maksmist ei saa teost lisada.",
+        result,
+      });
+    }
+
+    async function login() {
+      const result = await request(value("libraryUrl"), "/login", {
+        method: "POST",
+        body: { email: value("email") },
+      });
+
+      token = result.data.token || token;
+      if (token) saveValue("libraryToken", token);
+      log("Login", result);
+    }
+
+    async function createWork() {
+      const result = await request(value("libraryUrl"), "/works", {
+        method: "POST",
+        token,
+        body: {
+          title: `Õpetaja testteos ${Date.now()}`,
+          releaseDate: "2026-05-25",
+          language: "Estonian",
+          publisher: "Test Kirjastus",
+          filePath: `/tmp/opetaja-test-${Date.now()}.pdf`,
+          pages: 120,
+        },
+      });
+
+      const createdWorkId = result.data.id;
+      if (createdWorkId) {
+        workIdStack.push(Number(createdWorkId));
+        saveValue("createdWorkIds", JSON.stringify(workIdStack));
+      }
+      if (result.status !== 201) {
+        log("Teose lisamine ebaõnnestus", result);
+        return;
+      }
+
+      const book = await request(value("libraryUrl"), "/books", {
+        method: "POST",
+        token,
+        body: {
+          workId: Number(createdWorkId),
+          isbn: `TEST-${Date.now()}`,
+          format: "Digitaalne",
+          status: "Vaba",
+        },
+      });
+
+      log("Teose ja raamatu eksemplari lisamine Postgresisse", {
+        work: result,
+        book,
+        database: "library",
+        tables: ["works", "books"],
+      });
+    }
+
+    async function createBook() {
+      const latestWorkId = workIdStack[workIdStack.length - 1];
+
+      if (!latestWorkId) {
+        log("Raamatut ei saa lisada", { error: "Lisa enne teos. Raamat vajab work_id väärtust." });
+        return;
+      }
+
+      const result = await request(value("libraryUrl"), "/books", {
+        method: "POST",
+        token,
+        body: {
+          workId: Number(latestWorkId),
+          isbn: `TEST-${Date.now()}`,
+          format: "Digitaalne",
+          status: "Vaba",
+        },
+      });
+
+      log("Raamatu eksemplari lisamine Postgresisse", result);
+    }
+
+    async function showLibraryData() {
+      const works = await request(value("libraryUrl"), "/works", {
+        token,
+      });
+      const books = await request(value("libraryUrl"), "/books", {
+        token,
+      });
+
+      log("Library andmebaasi sisu Postgresist", {
+        database: "library",
+        worksTable: works,
+        booksTable: books,
+        note: "works = teosed/pealkirjad, books = raamatu eksemplarid",
+      });
+    }
+
+    async function updateWork() {
+      if (!workId) {
+        log("Teost ei saa muuta", { error: "Lisa enne teos." });
+        return;
+      }
+
+      const result = await request(value("libraryUrl"), `/works/${workId}`, {
+        method: "PATCH",
+        token,
+        body: {
+          title: `Muudetud testteos ${Date.now()}`,
+          pages: 150,
+        },
+      });
+
+      log("Teose muutmine", result);
+    }
+
+    async function deleteWork() {
+      let idToDelete = workIdStack.pop();
+
+      if (!idToDelete) {
+        log("Teost ei saa kustutada", {
+          error: "Ei leidnud kustutamiseks testteost.",
+          help: "Vajuta enne 'Lisa teos + raamatu eksemplar'.",
+        });
+        return;
+      }
+
+      const result = await request(value("libraryUrl"), `/works/${idToDelete}`, {
+        method: "DELETE",
+        token,
+      });
+
+      if (result.status === 200) {
+        saveValue("createdWorkIds", JSON.stringify(workIdStack));
+      } else {
+        workIdStack.push(Number(idToDelete));
+        saveValue("createdWorkIds", JSON.stringify(workIdStack));
+      }
+
+      log("Teose kustutamine", {
+        deletedWorkId: idToDelete,
+        remainingWorkIdStack: workIdStack,
+        result,
+      });
+    }
+
+    document.getElementById("checkServersButton").addEventListener("click", () => {
+      run("Serverite kontroll", checkServers);
+    });
+    document.getElementById("showAccountsButton").addEventListener("click", () => {
+      run("Pangakontod", showAccounts);
+    });
+    document.getElementById("payButton").addEventListener("click", () => {
+      run("Tellimuse makse", paySubscription);
+    });
+    document.getElementById("tryWithoutSubscriptionButton").addEventListener("click", () => {
+      run("Ilma tellimuseta lisamise proov", tryWithoutSubscription);
+    });
+    document.getElementById("loginButton").addEventListener("click", () => {
+      run("Login", login);
+    });
+    document.getElementById("createWorkButton").addEventListener("click", () => {
+      run("Teose lisamine", createWork);
+    });
+    document.getElementById("createBookButton").addEventListener("click", () => {
+      run("Raamatu eksemplari lisamine", createBook);
+    });
+    document.getElementById("showBooksButton").addEventListener("click", () => {
+      run("Library andmebaasi sisu", showLibraryData);
+    });
+    document.getElementById("updateWorkButton").addEventListener("click", () => {
+      run("Teose muutmine", updateWork);
+    });
+    document.getElementById("deleteWorkButton").addEventListener("click", () => {
+      run("Teose kustutamine", deleteWork);
+    });
+  </script>
+</body>
+</html>
